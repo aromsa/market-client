@@ -1,19 +1,54 @@
-import React from 'react'
-import { View, StyleSheet, Text, TextInput, Button} from 'react-native'
+import React, { useState } from 'react'
+import { 
+  View, 
+  StyleSheet, 
+  Text, 
+  Button, 
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert
+} from 'react-native'
+import Card from '../components/Card'
+import Colors from '../constants/colors'
+import Input from '../components/Input'
 
 const HomePage = props => {
+
+  const [enterValue, setEnteredValue] = useState('')
+
+  const numberInputHander = inputText => {
+    setEnteredValue(inputText.replace(/[^0-9]/g, ''));
+  };
+
+  const resetInputHandler = () => {
+    Alert.alert("test")
+    let value = ""
+    setEnteredValue(value)
+  }
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title} >Home Page</Text>
-      <View style={styles.card}>
-        <Text>Designer</Text>
-        <TextInput/>
-        <View style={styles.buttonContainer}>
-          <Button title="Like" onPress={() => {}}/>
-          <Button title="Unlike" onPress={() => {}}/>
-        </View>
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+    }}>
+      <View style={styles.screen}>
+        <Text style={styles.title} >Home Page</Text>
+        <Card style={styles.card}>
+          <Text>Designer</Text>
+          <Input 
+          style={styles.input} 
+          blurOnSubmit 
+          autoCapitalize='none' 
+          autoCorrect={false} 
+          keyboardType='number-pad' 
+          maxLength={2}
+          onChangeText={numberInputHander}/>
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}><Button title="Like" onPress={() => {}} color={Colors.accent}/></View>
+            <View style={styles.button}><Button title="Unlike" onPress={resetInputHandler} color={Colors.primary}/></View>
+          </View>
+        </Card>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -22,21 +57,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     alignItems: 'center',
-    // backgroundColor: '#8eadde',
   },
   card: {
     width: 300,
     maxWidth: '80%',
     alignItems: 'center',
-    shadowColor: 'black',
-    shadowOffset: {width: 0, height: 2},
-    shadowRadius: 6,
-    shadowOpacity: 0.26,
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    // Android
-    elevation: 8,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -44,10 +69,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 15
   },
+  button: {
+    width:100
+  },
   title: {
     fontSize: 20,
     marginVertical: 10,
   },
+  input: {
+    width: 100,
+    textAlign: 'center'
+  }
 })
 
 export default HomePage
