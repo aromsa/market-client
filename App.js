@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View} from 'react-native';
-import Header from './components/Header'
-import LoginPage from './screens/LoginPage'
-import HomePage from './screens/HomePage'
+import Header from './src/components/Header'
+import LoginPage from './src/screens/LoginPage'
+import HomePage from './src/screens/HomePage'
 // import { NavigationContainer } from '@react-navigation/native'
 
 import {
