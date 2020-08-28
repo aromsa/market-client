@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
+
 import { 
   View, 
   StyleSheet, 
@@ -8,17 +9,55 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
-  Platform,
-  TouchableOpacity,
   Linking,
-  AppRegistry
+  AppRegistry,
 } from 'react-native'
+
 import Card from '../components/Card'
 import Colors from '../styles/colors'
 import Input from '../components/Input'
+// import PasswordInputText from 'react-native-hide-show-password-input';
 
 const LoginPage = props => {
 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState('')
+
+
+  const usernameInputHandler = (username) => { 
+    setUsername(username)
+  }
+  
+  const passwordInputHandler = (password) => { 
+    setPassword(password)
+  }
+
+  const handleSignInSubmit = () => {
+    console.log("Login form has been submitted")
+    fetch("http://localhost:3000/buyers/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({username: username, password: password})
+    })
+    .then(r => r.json())
+    .then(handleResponse)
+  }
+
+  const handleResponse = (resp) => {
+    setUsername('')
+    setPassword('')
+    if (resp.id) {
+      console.log("if", resp)
+      setUser(resp)
+      props.navigation.navigate('HomePage')
+    } else {
+      Alert.alert(resp.message)
+      console.log("Login handleResponse else statement", resp)
+    }
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => {
@@ -29,19 +68,25 @@ const LoginPage = props => {
         <Card style={styles.card}>
           <Text>SIGN IN</Text>
           <Input placeholder='username'
+          onChangeText={usernameInputHandler}
+          value={username}
           style={styles.input} 
           blurOnSubmit 
           autoCapitalize='none' 
           autoCorrect={false} 
          />
          <Input placeholder='password'
+          onChangeText={passwordInputHandler}
+          value={password}
           style={styles.input} 
           blurOnSubmit 
           autoCapitalize='none' 
           autoCorrect={false} 
          />
           <View style={styles.buttonContainer}>
-            <View style={styles.button}><Button title="Sign In" onPress={props.onSelectedStyle} color={Colors.accent}/></View>
+            <View style={styles.button}>
+              <Button title="Sign In" onPress={handleSignInSubmit} color={Colors.accent}/>
+            </View>
           </View>
           <View>
             <Text style={styles.cardFooter}>Don't have an account?</Text>
@@ -94,5 +139,3 @@ const styles = StyleSheet.create({
 })
 
 export default LoginPage
-
-// Alert.alert("test")
