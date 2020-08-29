@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { 
   View, 
@@ -7,17 +8,14 @@ import {
   Button, 
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
-  Platform,
-  TouchableOpacity
 } from 'react-native'
 import Card from '../components/Card'
 import Colors from '../styles/colors'
 import Input from '../components/Input'
 
-const HomePage = props => {
+const BuyerHomePage = props => {
 
-
+console.log("Buyer Props: ", props.buyers)  
   return (
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
@@ -74,6 +72,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default HomePage
+const msp = (state) => {
+  console.log("State in msp: ", state.buyers)
+  return {buyers: state.buyers}
+}
 
-// Alert.alert("test")
+export default connect(msp)(BuyerHomePage)

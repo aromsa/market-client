@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native';
+import Card from '../components/Card'
+import Colors from '../styles/colors'
+import Input from '../components/Input'
+// import PasswordInputText from 'react-native-hide-show-password-input';
 
 import { 
   View, 
@@ -10,20 +13,13 @@ import {
   Keyboard,
   Alert,
   Linking,
-  AppRegistry,
 } from 'react-native'
-
-import Card from '../components/Card'
-import Colors from '../styles/colors'
-import Input from '../components/Input'
-// import PasswordInputText from 'react-native-hide-show-password-input';
 
 const LoginPage = props => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState('')
-
 
   const usernameInputHandler = (username) => { 
     setUsername(username)
@@ -50,9 +46,9 @@ const LoginPage = props => {
     setUsername('')
     setPassword('')
     if (resp.id) {
-      console.log("if", resp)
+      // console.log("if", resp)
       setUser(resp)
-      props.navigation.navigate('HomePage')
+      props.navigation.navigate('BuyerHomePage')
     } else {
       Alert.alert(resp.message)
       console.log("Login handleResponse else statement", resp)
@@ -108,7 +104,6 @@ const styles = StyleSheet.create({
   card: {
     width: 300,
     maxWidth: '90%',
-    // alignItems: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
