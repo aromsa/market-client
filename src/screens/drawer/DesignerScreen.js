@@ -10,9 +10,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native'
-import Card from '../components/Card'
-import Colors from '../styles/colors'
-import Input from '../components/Input'
+// '../../styles/styles.js'
+import Card from '../../components/Card'
+import Colors from '../../styles/colors'
+import Input from '../../components/Input'
 
 const DesignerScreen = props => {
 
@@ -31,7 +32,7 @@ const DesignerScreen = props => {
       Keyboard.dismiss();
     }}>
       <View style={styles.screen}>
-        <Text style={styles.title} >Welcome back {buyerName()}!</Text>
+        <Text style={styles.title} >Designer Screen</Text>
         <Card style={styles.card}>
           <Text>{props.designers.first}</Text>
           <Input 

@@ -22,7 +22,6 @@ const LoginPage = (props) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // const [buyer, setBuyer] = useState('')
   // const [token, setToken] = useState('')
 
   const usernameInputHandler = (username) => { 
@@ -38,43 +37,20 @@ const LoginPage = (props) => {
     props.getBuyer(buyerObj)
     setUsername('')
     setPassword('')
-    // handleResponse()
   }
-
-  // useEffect(() => {
-  //   props.getDesigners()
-  // }, [props.designers])
 
   useEffect(() => {
     handleResponse()
   }, [props.buyer])
 
   const handleResponse = () => {
-    // console.log("first: ", props.buyer.buyer)
     if (props.buyer.buyer){
-      // console.log(props.buyer)
+      // localStorage.token = resp.token
       props.navigation.navigate('BuyerHomePage')
     } else {
-      // console.log("else: ", props.buyer)
+      return
     }
   }
-  //   } else {
-  //     localStorage.token = resp.token
-  //     setUser(resp)
-  //     props.navigation.navigate('BuyerHomePage')
-  //   }
-
-    // if (resp.id) {
-    //   setUsername('')
-    //   setPassword('')
-    //   // console.log("if", resp)
-    //   setUser(resp)
-    //   props.navigation.navigate('BuyerHomePage')
-    // } else {
-    //   Alert.alert(resp.message)
-    //   console.log("Login handleResponse else statement", resp)
-    // }
-  
 
   return (
     <TouchableWithoutFeedback onPress={() => {

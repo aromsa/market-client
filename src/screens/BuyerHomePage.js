@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import Card from '../components/Card'
+import Colors from '../styles/colors'
+import DesignerCard from '../components/DesignerCard'
 
 import { connect } from 'react-redux'
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -9,10 +12,8 @@ import {
   Button, 
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
 } from 'react-native'
-import Card from '../components/Card'
-import Colors from '../styles/colors'
-import Input from '../components/Input'
 
 const BuyerHomePage = props => {
 
@@ -25,35 +26,38 @@ const BuyerHomePage = props => {
   useEffect(() => {
     props.desingers
   }, [props.designers])
+ 
+  // console.log(props.buyer.buyer.fav_designers[0].img)
 
-console.log("Buyer Props: ", props.designers )  
+  let favDesigners = props.buyer.buyer.fav_designers.map(designer => 
+    <DesignerCard  
+      designer={designer.name}
+      photo={designer.img}
+      key={designer.id}>
+      {/* <Text>{designer.name}</Text>
+      <Image
+        style={styles.stretch}
+      />
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}><Button title="Like" onPress={props.onSelectedStyle} color={Colors.accent}/></View>
+        <View style={styles.button}><Button title="View Styles" onPress={() => {resetInputHandler}} color={Colors.primary}/></View>
+      </View> */}
+    </DesignerCard>)
+
   return (     
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
     }}>
       <View style={styles.screen}>
         <Text style={styles.title} >Welcome back {buyerName()}!</Text>
-        <Card style={styles.card}>
-          <Text>{props.designers.first}</Text>
-          <Input 
-          style={styles.input} 
-          blurOnSubmit 
-          autoCapitalize='none' 
-          autoCorrect={false} 
-          keyboardType='number-pad' 
-          maxLength={2}
-         />
-          <View style={styles.buttonContainer}>
-            <View style={styles.button}><Button title="Like" onPress={props.onSelectedStyle} color={Colors.accent}/></View>
-            <View style={styles.button}><Button title="Unlike" onPress={() => {resetInputHandler}} color={Colors.primary}/></View>
-          </View>
-        </Card>
+        {favDesigners}
       </View>
     </TouchableWithoutFeedback>
   )
 }
 
 const styles = StyleSheet.create({
+
   screen: {
     flex: 1,
     padding: 10,
@@ -67,11 +71,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: 15
   },
   button: {
-    width:100
+    width:150
   },
   title: {
     fontSize: 20,

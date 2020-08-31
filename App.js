@@ -11,19 +11,49 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+import {
+  DefaultTheme,
+  DarkTheme,
+  DrawerActions
+} from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Appearance, useColorScheme, AppearanceProvider } from 'react-native-appearance';
+import DesignerScreen from './src/screens/drawer/DesignerScreen';
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App (props) {
+
+  const createDrawer = () =>
+  <Drawer.Navigator>
+    <Drawer.Screen name="Home" component={BuyerHomePage}/>
+    <Drawer.Screen name="All Designers" component={DesignerScreen} />
+    <Drawer.Screen name="Selected Styles" component={DesignerScreen} />
+    <Drawer.Screen name="Log Out" component={DesignerScreen} />
+
+  </Drawer.Navigator>
 
   const createHomeStack = () =>
     <Stack.Navigator>
       <Stack.Screen name="Login" component={LoginPage}/>
-      <Stack.Screen name="BuyerHomePage" component={BuyerHomePage}/>
+      <Stack.Screen name="BuyerHomePage" children={createDrawer}
+        options={({ navigation }) => ({
+          title: "MARKET",
+          headerLeft: () =>
+            <Icon
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+              style={[{ color: 'white', marginLeft: 8 }]}
+              size={24}
+              name={'menu'}
+              />
+            })
+            }
+          />
     </Stack.Navigator>
 
   return (
