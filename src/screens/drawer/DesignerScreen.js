@@ -14,20 +14,19 @@ import Card from '../components/Card'
 import Colors from '../styles/colors'
 import Input from '../components/Input'
 
-const BuyerHomePage = props => {
+const DesignerScreen = props => {
 
-  const buyerName = () => {
-    let name = props.buyer.buyer.name
-    let firstName = name.split(" ", 1)
-    return firstName
-  }
+  // const buyerName = () => {
+  //   let name = props.buyer.buyer.name
+  //   let firstName = name.split(" ", 1)
+  //   return firstName
+  // }
 
-  useEffect(() => {
-    props.desingers
-  }, [props.designers])
-
-console.log("Buyer Props: ", props.designers )  
-  return (     
+  // useEffect(() => {
+  //   props.desingers
+  // }, [props.designers])
+ 
+  return (    
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
     }}>
@@ -84,8 +83,7 @@ const styles = StyleSheet.create({
 })
 
 const msp = (state) => {
-  // console.log("State in msp: ", state.buyer, state.designers)
   return {buyer: state.buyer, designers: state.designers}
 }
 
-export default connect(msp)(BuyerHomePage)
+export default connect(msp)(DesignerScreen)
