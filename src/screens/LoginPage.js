@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from '../components/Card'
 import Colors from '../styles/colors'
 import Input from '../components/Input'
+import { getBuyer } from "../redux/action";
+import { getDesigners } from "../redux/action";
+import { connect } from 'react-redux'
+
 // import PasswordInputText from 'react-native-hide-show-password-input';
 
 import { 
@@ -11,15 +15,15 @@ import {
   Button, 
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
   Linking,
 } from 'react-native'
 
-const LoginPage = props => {
+const LoginPage = (props) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState('')
+  // const [buyer, setBuyer] = useState('')
+  // const [token, setToken] = useState('')
 
   const usernameInputHandler = (username) => { 
     setUsername(username)
@@ -30,30 +34,47 @@ const LoginPage = props => {
   }
 
   const handleSignInSubmit = () => {
-    console.log("Login form has been submitted")
-    fetch("http://localhost:3000/buyers/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({username: username, password: password})
-    })
-    .then(r => r.json())
-    .then(handleResponse)
-  }
-
-  const handleResponse = (resp) => {
+    let buyerObj = {username: username, password: password}
+    props.getBuyer(buyerObj)
     setUsername('')
     setPassword('')
-    if (resp.id) {
-      // console.log("if", resp)
-      setUser(resp)
+    // handleResponse()
+  }
+
+  // useEffect(() => {
+  //   props.getDesigners()
+  // }, [props.designers])
+
+  useEffect(() => {
+    handleResponse()
+  }, [props.buyer])
+
+  const handleResponse = () => {
+    // console.log("first: ", props.buyer.buyer)
+    if (props.buyer.buyer){
+      // console.log(props.buyer)
       props.navigation.navigate('BuyerHomePage')
     } else {
-      Alert.alert(resp.message)
-      console.log("Login handleResponse else statement", resp)
+      // console.log("else: ", props.buyer)
     }
   }
+  //   } else {
+  //     localStorage.token = resp.token
+  //     setUser(resp)
+  //     props.navigation.navigate('BuyerHomePage')
+  //   }
+
+    // if (resp.id) {
+    //   setUsername('')
+    //   setPassword('')
+    //   // console.log("if", resp)
+    //   setUser(resp)
+    //   props.navigation.navigate('BuyerHomePage')
+    // } else {
+    //   Alert.alert(resp.message)
+    //   console.log("Login handleResponse else statement", resp)
+    // }
+  
 
   return (
     <TouchableWithoutFeedback onPress={() => {
@@ -133,4 +154,12 @@ const styles = StyleSheet.create({
  }
 })
 
-export default LoginPage
+function mdp(dispatch) {
+  return { getBuyer: (buyerObj) => dispatch(getBuyer(buyerObj)), getDesigners: (designers) => dispatch(getDesigners(designers)) }
+}
+
+function msp(state) {
+  return { buyer: state.buyer }
+}
+
+export default connect(msp, mdp)(LoginPage);

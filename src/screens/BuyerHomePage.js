@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
 import { connect } from 'react-redux'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { 
@@ -15,15 +16,25 @@ import Input from '../components/Input'
 
 const BuyerHomePage = props => {
 
-console.log("Buyer Props: ", props.buyers)  
+  const buyerName = () => {
+    let name = props.buyer.buyer.name
+    let firstName = name.split(" ", 1)
+    return firstName
+  }
+
+  useEffect(() => {
+    props.desingers
+  }, [props.designers])
+
+console.log("Buyer Props: ", props.designers )  
   return (
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
     }}>
       <View style={styles.screen}>
-        <Text style={styles.title} >Home Page</Text>
+        <Text style={styles.title} >Welcome back {buyerName()}!</Text>
         <Card style={styles.card}>
-          <Text>Designer</Text>
+          <Text>{props.designers.first}</Text>
           <Input 
           style={styles.input} 
           blurOnSubmit 
@@ -73,8 +84,8 @@ const styles = StyleSheet.create({
 })
 
 const msp = (state) => {
-  console.log("State in msp: ", state.buyers)
-  return {buyers: state.buyers}
+  // console.log("State in msp: ", state.buyer, state.designers)
+  return {buyer: state.buyer, designers: state.designers}
 }
 
 export default connect(msp)(BuyerHomePage)

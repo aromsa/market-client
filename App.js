@@ -1,28 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import thunk from 'redux-thunk'
 import { StyleSheet, View} from 'react-native';
 import Header from './src/components/Header'
 import LoginPage from './src/screens/LoginPage'
 import BuyerHomePage from './src/screens/BuyerHomePage'
+import rootReducer from './src/redux/reducer'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 
-const rootReducer = () => {
-  return {buyers: []}
-}
-
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App (props) {
 
-const createHomeStack = () =>
-  <Stack.Navigator>
-    <Stack.Screen name="Login" component={LoginPage}/>
-    <Stack.Screen name="BuyerHomePage" component={BuyerHomePage}/>
-  </Stack.Navigator>
+  // useEffect(() => {
+  //   props.getDesigners()
+  // }, [])
+
+  const createHomeStack = () =>
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={LoginPage}/>
+      <Stack.Screen name="BuyerHomePage" component={BuyerHomePage}/>
+    </Stack.Navigator>
 
   return (
     <Provider store={store}>
@@ -41,3 +43,13 @@ const styles = StyleSheet.create({
     flex: 1,
   }
 });
+
+// function mdp(dispatch) {
+//   return { getDesigners: (designers) => dispatch(getDesigners(designers)) }
+// }
+
+// function msp(state) {
+//   return { designers: state.designers }
+// }
+
+// export default connect(msp, mdp)(App);
