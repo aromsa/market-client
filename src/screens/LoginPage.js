@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import Colors from '../styles/colors'
 import Input from '../components/Input'
 import { getBuyer, getDesigners } from "../redux/action";
-// import { getDesigners } from "../redux/action";
+
 import { connect, useDispatch } from 'react-redux'
 
 // import PasswordInputText from 'react-native-hide-show-password-input';

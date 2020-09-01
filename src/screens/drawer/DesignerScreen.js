@@ -1,56 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { connect } from 'react-redux'
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { 
   View, 
   StyleSheet, 
   Text, 
-  Button, 
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native'
 // '../../styles/styles.js'
-import Card from '../../components/Card'
-import Colors from '../../styles/colors'
-import Input from '../../components/Input'
+import DesignerCard from '../../components/DesignerCard'
 
 const DesignerScreen = props => {
 
-  // const buyerName = () => {
-  //   let name = props.buyer.buyer.name
-  //   let firstName = name.split(" ", 1)
-  //   return firstName
-  // }
-
-  // useEffect(() => {
-  //   props.desingers
-  // }, [props.designers])
+  // console.log("Designer Screen: ", props.designers.designers)
  
+  let allDesigners = props.designers.designers.map(designer => 
+    <DesignerCard
+      designer={designer.name}
+      photo={designer.img}
+      key={designer.id}
+      id={designer.id}>
+    </DesignerCard>)
+
   return (    
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss();
-    }}>
-      <View style={styles.screen}>
-        <Text style={styles.title} >Designer Screen</Text>
-        <Card style={styles.card}>
-          <Text>{props.designers.first}</Text>
-          <Input 
-          style={styles.input} 
-          blurOnSubmit 
-          autoCapitalize='none' 
-          autoCorrect={false} 
-          keyboardType='number-pad' 
-          maxLength={2}
-         />
-          <View style={styles.buttonContainer}>
-            <View style={styles.button}><Button title="Like" onPress={props.onSelectedStyle} color={Colors.accent}/></View>
-            <View style={styles.button}><Button title="Unlike" onPress={() => {resetInputHandler}} color={Colors.primary}/></View>
-          </View>
-        </Card>
-      </View>
-    </TouchableWithoutFeedback>
-  )
+      <TouchableWithoutFeedback onPress={() => {
+        Keyboard.dismiss();
+      }}>
+        <View style={styles.screen}>
+          <Text style={styles.title} >All Designers</Text>
+          {allDesigners}
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  
 }
 
 const styles = StyleSheet.create({

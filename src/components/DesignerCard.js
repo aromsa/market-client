@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { updateFavDesigners } from "../redux/action";
+import { connect } from 'react-redux'
 
 const colors = {
   transparent: 'transparent',
@@ -16,12 +18,16 @@ const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 class DesignerCard extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       liked: false
     }
-
     this.lastPress = 0
+  }
+
+  componentDidMount(){
+    if (this.props.like === true) {
+      this.setState(prevState => ({ liked: !prevState.liked }))
+    } 
   }
 
   handleLargeAnimatedIconRef = (ref) => {
@@ -68,15 +74,37 @@ class DesignerCard extends React.Component {
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn()
     this.setState(prevState => ({ liked: !prevState.liked }))
+    updateFavDesigners(this.props.id, this.state.liked) 
+    // console.log(this.props.buyer.fav_designers)
+    this.updateFavs(this.props.id)
   }
 
-  render() {
+  // updateFavs = (id) => {
+  //   let newFavs = this.props.buyer.buyer.fav_designers.filter(fav => fav.id !== id)
+
+  //   let buyer = this.props.buyer.buyer.fav_designers
+  //   console.log("STATE: ", this.state.buyer, "BUYER", buyer)
+  //   // this.setState({buyer: [...buyer, newFavs]})
+  // }
+  
+  heartColor = () => {
+    if(this.props.like === true ) {
+      return colors.heartColor
+    } else {
+      return colors.white
+    }
+  }
+
+
+  render() {    
     const { liked } = this.state
+
     const card = { 
       designer: this.props.designer,
       photo: {uri : this.props.photo },
     }
 
+    // console.log(this.state.liked)
     return (
       <View style={styles.container}>
       <TouchableOpacity
@@ -126,7 +154,15 @@ class DesignerCard extends React.Component {
   }
 }
 
-export default DesignerCard
+const msp = (state) => {
+  return {buyer: state.buyer}
+}
+
+// const mdp = (dispatch) => {
+
+// }
+
+export default connect(msp)(DesignerCard)
 
 const styles = StyleSheet.create({
   container: {
@@ -165,7 +201,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   icon: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center'
   },

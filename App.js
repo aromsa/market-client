@@ -30,13 +30,16 @@ const Drawer = createDrawerNavigator();
 
 export default function App (props) {
 
+  const handleLogOut = () => {
+    console.log
+  }
+
   const createDrawer = () =>
   <Drawer.Navigator>
     <Drawer.Screen name="Home" component={BuyerHomePage}/>
     <Drawer.Screen name="All Designers" component={DesignerScreen} />
     <Drawer.Screen name="Selected Styles" component={DesignerScreen} />
     <Drawer.Screen name="Log Out" component={LoginPage} />
-
   </Drawer.Navigator>
 
   const createHomeStack = () =>

@@ -1,7 +1,16 @@
-import { Alert, Linking} from 'react-native'
+export const updateFavDesigners = (id, boolean) => {
+  // console.log("BEFORE FETCH: ", boolean, typeof id)
+  let url = "http://localhost:3000/favorite_designers"
+  if (boolean === true) {
+    fetch(`${url}/${id}`,{ 
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    // .then(obj => console.log("AFTER FETCH: ", obj))
+  }
+} 
 
 export const getDesigners = () => {
-
   return function (dispatch) {
     // console.log("FETCH 1: ")
     fetch("http://localhost:3000/designers")
@@ -23,21 +32,6 @@ export const getBuyer = (buyerObj) => {
       body: JSON.stringify(buyerObj)
     })
     .then(r => r.json())
-    
-    .then(obj => 
-
-      dispatch({ type: "getBuyer", payload: obj}))
+    .then(obj => dispatch({ type: "getBuyer", payload: obj}))
   }
-  
 }
-
-
-// {
-//       // console.log("ACTION: ", obj.buyer.id)
-//       if (obj.buyer.id === undefined){
-//         Alert.alert(obj.message)
-//       }else{
-//         // Alert.alert(obj.message)
-//         console.log("true")
-//       }
-
