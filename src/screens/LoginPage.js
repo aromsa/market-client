@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Card from '../components/Card'
 import Colors from '../styles/colors'
 import Input from '../components/Input'
-import { getBuyer } from "../redux/action";
-import { getDesigners } from "../redux/action";
-import { connect } from 'react-redux'
+import { getBuyer, getDesigners } from "../redux/action";
+// import { getDesigners } from "../redux/action";
+import { connect, useDispatch } from 'react-redux'
 
 // import PasswordInputText from 'react-native-hide-show-password-input';
 
@@ -39,9 +39,16 @@ const LoginPage = (props) => {
     setPassword('')
   }
 
+  // let dispatch = useDispatch()
+
   useEffect(() => {
     handleResponse()
   }, [props.buyer])
+
+    useEffect(() => {
+    props.getDesigners()
+  }, [])
+
 
   const handleResponse = () => {
     if (props.buyer.buyer){
@@ -131,11 +138,11 @@ const styles = StyleSheet.create({
 })
 
 function mdp(dispatch) {
-  return { getBuyer: (buyerObj) => dispatch(getBuyer(buyerObj)), getDesigners: (designers) => dispatch(getDesigners(designers)) }
+  return { getBuyer: (buyerObj) => dispatch(getBuyer(buyerObj)), getDesigners: () => dispatch(getDesigners())}
 }
 
 function msp(state) {
-  return { buyer: state.buyer }
+  return { buyer: state.buyer, designers: state.designers}
 }
 
 export default connect(msp, mdp)(LoginPage);

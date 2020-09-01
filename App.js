@@ -11,6 +11,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+
 import {
   DefaultTheme,
   DarkTheme,
@@ -34,7 +35,7 @@ export default function App (props) {
     <Drawer.Screen name="Home" component={BuyerHomePage}/>
     <Drawer.Screen name="All Designers" component={DesignerScreen} />
     <Drawer.Screen name="Selected Styles" component={DesignerScreen} />
-    <Drawer.Screen name="Log Out" component={DesignerScreen} />
+    <Drawer.Screen name="Log Out" component={LoginPage} />
 
   </Drawer.Navigator>
 
@@ -57,7 +58,8 @@ export default function App (props) {
     </Stack.Navigator>
 
   return (
-    <Provider store={store}>
+    
+    <Provider store={store} >
       <NavigationContainer>
         <View style={styles.screen}>
           <Header title=""/>

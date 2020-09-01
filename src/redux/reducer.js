@@ -24,8 +24,9 @@ const buyerReducer = ( state = defaultState, action) => {
 
 const designerReducer = ( state = defaultState, action) => {
   switch (action.type) {
-    case "getDesigner":
-      return {...state, designers: action.payload.designers}
+    case "getDesigners":
+      // console.log("DesignerReducer: ", action.payload)
+      return {...state, designers: action.payload}
     default:
       return state
   }

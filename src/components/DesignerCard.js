@@ -1,5 +1,4 @@
 import React from 'react'
-import Card from './Card'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -12,14 +11,7 @@ const colors = {
   black: '#000', 
 }
 
-// const card = { 
-//   designer: 'KATHARINE KIDD',
-//   photo: {uri : 'https://i.postimg.cc/wTc7WGzh/Screen-Shot-2020-08-27-at-1-55-56-PM.png' },
-//   key: 'pkarniej'
-// }
-
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
-
 
 class DesignerCard extends React.Component {
   constructor(props) {
@@ -84,7 +76,7 @@ class DesignerCard extends React.Component {
       designer: this.props.designer,
       photo: {uri : this.props.photo },
     }
-    // console.log(this.props.photo)
+
     return (
       <View style={styles.container}>
       <TouchableOpacity

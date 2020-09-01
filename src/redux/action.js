@@ -1,7 +1,9 @@
 import { Alert, Linking} from 'react-native'
 
 export const getDesigners = () => {
+
   return function (dispatch) {
+    // console.log("FETCH 1: ")
     fetch("http://localhost:3000/designers")
     .then(r => r.json())
     .then(obj => 

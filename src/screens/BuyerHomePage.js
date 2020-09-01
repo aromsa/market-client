@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import Card from '../components/Card'
-import Colors from '../styles/colors'
+import React, { useEffect } from 'react'
 import DesignerCard from '../components/DesignerCard'
 
 import { connect } from 'react-redux'
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { 
   View, 
   StyleSheet, 
-  Text, 
-  Button, 
+  Text,  
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
 } from 'react-native'
 
 const BuyerHomePage = props => {
@@ -25,23 +20,14 @@ const BuyerHomePage = props => {
 
   useEffect(() => {
     props.desingers
+    console.log("Designers UseEffect: ", props.designers.designers)
   }, [props.designers])
- 
-  // console.log(props.buyer.buyer.fav_designers[0].img)
 
   let favDesigners = props.buyer.buyer.fav_designers.map(designer => 
     <DesignerCard  
       designer={designer.name}
       photo={designer.img}
       key={designer.id}>
-      {/* <Text>{designer.name}</Text>
-      <Image
-        style={styles.stretch}
-      />
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}><Button title="Like" onPress={props.onSelectedStyle} color={Colors.accent}/></View>
-        <View style={styles.button}><Button title="View Styles" onPress={() => {resetInputHandler}} color={Colors.primary}/></View>
-      </View> */}
     </DesignerCard>)
 
   return (     
@@ -88,7 +74,6 @@ const styles = StyleSheet.create({
 })
 
 const msp = (state) => {
-  // console.log("State in msp: ", state.buyer, state.designers)
   return {buyer: state.buyer, designers: state.designers}
 }
 
