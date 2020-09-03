@@ -18,19 +18,19 @@ const BuyerHomePage = props => {
     return firstName
   }
 
-  // console.log(props.buyer)
   useEffect(() => {
     props.desingers
-    // console.log("Designers UseEffect: ", props.designers.designers)
+    // console.log("Designers UseEffect: ", props.buyer.buyer.favorite_designers.map(fav => fav))
   }, [props.designers])
 
-  let favDesigners = props.buyer.buyer.fav_designers.map(designer => 
+  let favs = props.buyer.buyer.favorite_designers
+  let favDesigners = favs.map(fav => 
     <DesignerCard
       like={true}
-      designer={designer.name}
-      photo={designer.img}
-      key={designer.id}
-      id={designer.id}>
+      designer={fav.designer.name}
+      photo={fav.designer.img}
+      key={fav.designer.id}
+      id={fav.id}>
     </DesignerCard>)
 
   return (     

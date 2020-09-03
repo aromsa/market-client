@@ -8,6 +8,7 @@ const defaultState = {
 }
 
 const buyerReducer = ( state = defaultState, action) => {
+  console.log("reducer", action.type)
   switch (action.type) {
     case "getBuyer":
       // console.log("reducer: ")
@@ -15,8 +16,12 @@ const buyerReducer = ( state = defaultState, action) => {
         Alert.alert(action.payload.message)
         return {...state, buyer: null}
       }else{
+      
         return {...state, buyer: action.payload.buyer}
       }
+     case "update favs":
+      // console.log(action.payload.buyer)
+      return {...state, buyer: action.payload.buyer}
     default:
       return state
   }

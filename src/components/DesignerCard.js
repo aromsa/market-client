@@ -25,6 +25,8 @@ class DesignerCard extends React.Component {
   }
 
   componentDidMount(){
+    // console.log("DC: ", this.props.buyer.buyer.fav_designers)
+    // if this.
     if (this.props.like === true) {
       this.setState(prevState => ({ liked: !prevState.liked }))
     } 
@@ -74,17 +76,24 @@ class DesignerCard extends React.Component {
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn()
     this.setState(prevState => ({ liked: !prevState.liked }))
-    updateFavDesigners(this.props.id, this.state.liked) 
+    // console.log(this.props.id)
+    this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
     // console.log(this.props.buyer.fav_designers)
-    this.updateFavs(this.props.id)
+    // this.props.updateFavs(this.props.id)
   }
 
   // updateFavs = (id) => {
-  //   let newFavs = this.props.buyer.buyer.fav_designers.filter(fav => fav.id !== id)
-
-  //   let buyer = this.props.buyer.buyer.fav_designers
-  //   console.log("STATE: ", this.state.buyer, "BUYER", buyer)
-  //   // this.setState({buyer: [...buyer, newFavs]})
+    // let buyer = this.props.buyer.map(buyer => 
+    //   buyer.fav_designers.filter(fav => fav.id !== id))
+    // .buyer.fav_designers.filter(fav => fav.id !== id)
+    // let buyer = this.props.buyer.buyer.fav_designers
+    // console.log("STATE: ", this.state.buyer, "BUYER", buyer)
+    // console.log("BEFORE: ", this.state, newFavs)
+    // let buyer = [...this.props.buyer.buyer, newFavs]
+    // console.log(id)
+    // this.setState({buyer: [...buyer, newFavs]})
+    // console.log("AFTER: ", this.state.buyer)
+    // this.props.updateFavs(newFavs)
   // }
   
   heartColor = () => {
@@ -104,7 +113,7 @@ class DesignerCard extends React.Component {
       photo: {uri : this.props.photo },
     }
 
-    // console.log(this.state.liked)
+    // console.log("DC PROPS: ", this.props)
     return (
       <View style={styles.container}>
       <TouchableOpacity
@@ -158,11 +167,12 @@ const msp = (state) => {
   return {buyer: state.buyer}
 }
 
-// const mdp = (dispatch) => {
+const mdp = (dispatch) => {
+  return {updateFavDesigners: (buyerid, id, liked) => dispatch(updateFavDesigners(buyerid, id, liked))}
+  // getDesigners: () => dispatch(getDesigners())
+}
 
-// }
-
-export default connect(msp)(DesignerCard)
+export default connect(msp, mdp)(DesignerCard)
 
 const styles = StyleSheet.create({
   container: {

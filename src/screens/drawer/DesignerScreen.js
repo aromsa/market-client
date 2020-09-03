@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { connect } from 'react-redux'
 import { 
@@ -6,16 +6,22 @@ import {
   StyleSheet, 
   Text, 
   TouchableWithoutFeedback,
-  Keyboard,
+  Keyboard, 
 } from 'react-native'
-// '../../styles/styles.js'
 import DesignerCard from '../../components/DesignerCard'
 
 const DesignerScreen = props => {
 
-  // console.log("Designer Screen: ", props.designers.designers)
- 
-  let allDesigners = props.designers.designers.map(designer => 
+  const [designers, setDesigners] = useState(props.designers.designers)
+
+  useEffect(() => {
+    designers
+  }, [designers])
+
+  let favs = props.buyer.buyer.fav_designers
+  let filterDesigners = designers.filter( designer => !favs.some(fav => fav.id === designer.id))
+
+  let allDesigners = filterDesigners.map(designer => 
     <DesignerCard
       designer={designer.name}
       photo={designer.img}
