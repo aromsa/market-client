@@ -52,3 +52,12 @@ export const getBuyer = (buyerObj) => {
     .then(obj => dispatch({ type: "getBuyer", payload: obj}))
   }
 }
+
+export const getStyles = () => {
+  return function (dispatch) {
+    // console.log("FETCH 1: ")
+    fetch("http://localhost:3000/styles")
+    .then(r => r.json())
+    .then(styles => dispatch({ type: "getStyles", payload: styles}))
+  }
+}

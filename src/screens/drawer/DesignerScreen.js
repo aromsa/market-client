@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { getStyles } from "../../redux/action";
+
 
 import { connect } from 'react-redux'
 import { 
+  ScrollView,
   View, 
   StyleSheet, 
   Text, 
   TouchableWithoutFeedback,
   Keyboard, 
+  FlatList
 } from 'react-native'
 import DesignerCard from '../../components/DesignerCard'
 
@@ -18,26 +22,40 @@ const DesignerScreen = props => {
     designers
   }, [designers])
 
+  useEffect(() => {
+    props.getStyles()
+  }, [])
+
+  const handleSelectDesigner = () => {
+    props.navigation.navigate("StylePage")
+  }
+
   let favs = props.buyer.buyer.fav_designers
   let filterDesigners = designers.filter( designer => !favs.some(fav => fav.id === designer.id))
 
   let allDesigners = filterDesigners.map(designer => 
     <DesignerCard
+      handleSelectDesigner={handleSelectDesigner}
       designer={designer.name}
       photo={designer.img}
       key={designer.id}
       id={designer.id}>
     </DesignerCard>)
 
-  return (    
+  return (   
+    <ScrollView>
       <TouchableWithoutFeedback onPress={() => {
         Keyboard.dismiss();
       }}>
+        
         <View style={styles.screen}>
           <Text style={styles.title} >All Designers</Text>
           {allDesigners}
+        
         </View>
+      
       </TouchableWithoutFeedback>
+      </ScrollView> 
     )
   
 }
@@ -76,4 +94,8 @@ const msp = (state) => {
   return {buyer: state.buyer, designers: state.designers}
 }
 
-export default connect(msp)(DesignerScreen)
+function mdp(dispatch) {
+  return { getStyles: () => dispatch(getStyles())}
+}
+
+export default connect(msp, mdp)(DesignerScreen)

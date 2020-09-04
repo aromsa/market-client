@@ -3,6 +3,8 @@ import thunk from 'redux-thunk'
 import { StyleSheet, View} from 'react-native';
 import Header from './src/components/Header'
 import LoginPage from './src/screens/LoginPage'
+import StylePage from './src/screens/StylePage'
+
 import BuyerHomePage from './src/screens/BuyerHomePage'
 import rootReducer from './src/redux/reducer'
 import { NavigationContainer } from '@react-navigation/native';
@@ -45,6 +47,7 @@ export default function App (props) {
   const createHomeStack = () =>
     <Stack.Navigator>
       <Stack.Screen name="Login" component={LoginPage}/>
+      <Stack.Screen name="StylePage" component={StylePage}/>
       <Stack.Screen name="BuyerHomePage" children={createDrawer}
         options={({ navigation }) => ({
           title: "MARKET",

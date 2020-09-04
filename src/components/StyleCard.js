@@ -2,8 +2,6 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
-import { updateFavDesigners } from "../redux/action";
-import { connect } from 'react-redux'
 
 const colors = {
   transparent: 'transparent',
@@ -15,7 +13,7 @@ const colors = {
 
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 
-class DesignerCard extends React.Component {
+class StyleCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -24,11 +22,11 @@ class DesignerCard extends React.Component {
     this.lastPress = 0
   }
 
-  componentDidMount(){
-    if (this.props.like === true) {
-      this.setState(prevState => ({ liked: !prevState.liked }))
-    } 
-  }
+  // componentDidMount(){
+  //   if (this.props.like === true) {
+  //     this.setState(prevState => ({ liked: !prevState.liked }))
+  //   } 
+  // }
 
   handleLargeAnimatedIconRef = (ref) => {
     this.largeAnimatedIcon = ref
@@ -74,7 +72,7 @@ class DesignerCard extends React.Component {
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn()
     this.setState(prevState => ({ liked: !prevState.liked }))
-    this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
+    // this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
   }
 
   heartColor = () => {
@@ -85,16 +83,18 @@ class DesignerCard extends React.Component {
     }
   }
 
-  handleSelectDesigner = () => {
-    this.props.handleSelectDesigner()
-  }
+  // handleSelectDesigner = () => {
+  //   this.props.handleSelectDesigner()
+  // }
 
   render() {    
     const { liked } = this.state
 
     const card = { 
-      designer: this.props.designer,
+      style: this.props.style,
       photo: {uri : this.props.photo },
+      size: this.props.size,
+      retail: this.props.retail
     }
 
     // console.log("DC PROPS: ", this.props)
@@ -117,8 +117,8 @@ class DesignerCard extends React.Component {
         <Image
           style={styles.image}
           source={card.photo}
-          resizeMode="cover"
-          // resizeMode="contain"
+          // resizeMode="cover"
+          resizeMode="contain"
         />
         <View style={styles.photoDescriptionContainer}
         >
@@ -135,10 +135,13 @@ class DesignerCard extends React.Component {
             />
           </TouchableOpacity >
           <View style={styles.textContainer}>
-            <Text style={styles.text}>Designer:  </Text>
             <Text
-            onPress={this.handleSelectDesigner}
-            style={[styles.text, styles.textPhotographer]}>{card.designer}</Text>
+            style={[styles.text, styles.textPhotographer]}>{card.style}</Text>
+          
+          {/* <Text style={styles.text}>Designer:  </Text> */}
+          <Text style={styles.text}>Size: {card.size} </Text>
+          <Text style={styles.text}>${card.retail}</Text>
+          
           </View>
         </View>
       </TouchableOpacity>
@@ -148,27 +151,28 @@ class DesignerCard extends React.Component {
   }
 }
 
-const msp = (state) => {
-  return {buyer: state.buyer}
-}
+// const msp = (state) => {
+//   return {buyer: state.buyer}
+// }
 
-const mdp = (dispatch) => {
-  return {updateFavDesigners: (buyerid, id, liked) => dispatch(updateFavDesigners(buyerid, id, liked))}
-}
+// const mdp = (dispatch) => {
+//   return {updateFavDesigners: (buyerid, id, liked) => dispatch(updateFavDesigners(buyerid, id, liked))}
+// }
 
-export default connect(msp, mdp)(DesignerCard)
+export default StyleCard
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    height: '100%',
+    padding: 5,
     alignItems: 'center',
+    justifyContent: 'center'
   },
   card: {
-    height: 345,
-    width: 300,
-    maxWidth: '80%',
-    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+    maxWidth: '100%',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: colors.white,
     borderRadius: 5,
@@ -183,8 +187,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 10,
-    height: 280,
-    width: '92%'
+    height: '70%',
+    width: '100%'
   },
   photoDescriptionContainer: {
     width: '100%',
@@ -218,8 +222,9 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   textContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     textAlign: 'left',
-    paddingTop: 0
+    paddingTop: 0,
+    flexWrap: 'wrap',
   }
 })

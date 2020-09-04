@@ -4,7 +4,8 @@ import { Alert} from 'react-native'
 
 const defaultState = {
     buyer: null,
-    designers: []
+    designers: [],
+    styles: []
 }
 
 const buyerReducer = ( state = defaultState, action) => {
@@ -37,9 +38,20 @@ const designerReducer = ( state = defaultState, action) => {
   }
 }
 
+const styleReducer = ( state = defaultState, action) => {
+  switch (action.type) {
+    case "getStyles":
+      // console.log("StylesReducer: ", action.payload)
+      return {...state, styles: action.payload}
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
     buyer: buyerReducer,
-    designers: designerReducer
+    designers: designerReducer,
+    styles: styleReducer
 })
 
 export default rootReducer
