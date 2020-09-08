@@ -5,7 +5,7 @@ import { Alert} from 'react-native'
 const defaultState = {
     buyer: null,
     designers: [],
-    styles: []
+    styles: [], 
 }
 
 const buyerReducer = ( state = defaultState, action) => {
@@ -23,6 +23,8 @@ const buyerReducer = ( state = defaultState, action) => {
      case "update favs":
       // console.log(action.payload.buyer)
       return {...state, buyer: action.payload.buyer}
+     case "update ss":
+      console.log("UPDATE SS: ", action.payload.buyer)
     default:
       return state
   }

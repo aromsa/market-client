@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getStyles } from "../../redux/action";
+// import { getStyles } from "../../redux/action";
 
 
 import { connect } from 'react-redux'
@@ -22,9 +22,9 @@ const DesignerScreen = props => {
     designers
   }, [designers])
 
-  useEffect(() => {
-    props.getStyles()
-  }, [])
+  // useEffect(() => {
+  //   props.getStyles()
+  // }, [])
 
   const handleSelectDesigner = () => {
     props.navigation.navigate("StylePage")
@@ -94,8 +94,8 @@ const msp = (state) => {
   return {buyer: state.buyer, designers: state.designers}
 }
 
-function mdp(dispatch) {
-  return { getStyles: () => dispatch(getStyles())}
-}
+// function mdp(dispatch) {
+//   return { getStyles: () => dispatch(getStyles())}
+// }
 
-export default connect(msp, mdp)(DesignerScreen)
+export default connect(msp)(DesignerScreen)

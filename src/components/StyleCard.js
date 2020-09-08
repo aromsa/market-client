@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { newSelectedStyle } from "../redux/action";
 
 const colors = {
   transparent: 'transparent',
@@ -72,6 +74,8 @@ class StyleCard extends React.Component {
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn()
     this.setState(prevState => ({ liked: !prevState.liked }))
+    this.props.newSelectedStyle(this.props.buyer.buyer.id, this.props.id)
+    // console.log(this.props.id)
     // this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
   }
 
@@ -151,15 +155,15 @@ class StyleCard extends React.Component {
   }
 }
 
-// const msp = (state) => {
-//   return {buyer: state.buyer}
-// }
+const msp = (state) => {
+  return {buyer: state.buyer}
+}
 
-// const mdp = (dispatch) => {
-//   return {updateFavDesigners: (buyerid, id, liked) => dispatch(updateFavDesigners(buyerid, id, liked))}
-// }
+const mdp = (dispatch) => {
+  return {newSelectedStyle: (buyerid, styleid) => dispatch(newSelectedStyle(buyerid, styleid))}
+}
 
-export default StyleCard
+export default connect(msp, mdp)(StyleCard)
 
 const styles = StyleSheet.create({
   container: {

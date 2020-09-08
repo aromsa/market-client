@@ -1,16 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Text, Button, StyleSheet, ScrollView} from 'react-native'
+import { View, StyleSheet, ScrollView} from 'react-native'
 import StyleCard from '../components/StyleCard'
 
 const StylePage = props => {
 
-  let allStyles = props.styles.styles
-  // console.log("STYLE PAGE: ", allStyles)
+  // const addLikedStyle = (buyerid, styleid) => {
+  //   console.log(buyerid, styleid)
+  // }
 
+  let allStyles = props.styles.styles
   let designerStyles = allStyles.map(style => 
     <View style={styles.box}>
     <StyleCard
+      // addLikedStyle={addLikedStyle}
       style={style.style_name}
       photo={style.images[0].img}
       size={style.size}
@@ -44,12 +47,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start' 
   },
   box: {
-    // backgroundColor: '#42d7f5',
     width: '50%',
     height: 280,
     maxHeight: 280,
     minHeight: 280
-    // padding: 5
   },
 
 })
