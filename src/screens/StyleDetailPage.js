@@ -1,10 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
-import { newSelectedStyle } from "../redux/action";
-// import { styleDetails } from "../../App"
+import { updateFavDesigners } from "../redux/action";
+import { connect } from 'react-redux'
 
 const colors = {
   transparent: 'transparent',
@@ -16,7 +15,7 @@ const colors = {
 
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 
-class StyleCard extends React.Component {
+class DesignerCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -26,19 +25,9 @@ class StyleCard extends React.Component {
   }
 
   componentDidMount(){
-    // if (this.props.like === true) {
-    //   this.setState(prevState => ({ liked: !prevState.liked }))
-    // } 
-    // console.log(this.props.buyer.buyer.selected_styles)
-    // console.log(this.props.id)
-
-    let favs = this.props.buyer.buyer.selected_styles
-    // let filterDesigners = designers.filter( designer => !favs.some(fav => fav.id === designer.id))
-    favs.map(style => {
-      if (style.id === this.props.id){
-        this.setState(prevState => ({ liked: !prevState.liked }))
-      }
-    })
+    if (this.props.like === true) {
+      this.setState(prevState => ({ liked: !prevState.liked }))
+    } 
   }
 
   handleLargeAnimatedIconRef = (ref) => {
@@ -82,11 +71,10 @@ class StyleCard extends React.Component {
     this.lastPress = time
   }
 
-  handleOnPressLike = (e) => {
+  handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn()
     this.setState(prevState => ({ liked: !prevState.liked }))
-    e.preventDefault()
-    this.props.newSelectedStyle(this.props.buyer.buyer.id, this.props.id)
+    this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
   }
 
   heartColor = () => {
@@ -97,24 +85,19 @@ class StyleCard extends React.Component {
     }
   }
 
-  handleSelectStyle = () => {
-    // this.props.handleSelectDesigner()
-    // console.log("clicked: ", this.props)
-    // props.navigation.navigate("StyleDetailPage")
-    // this.props.styleDetails(this.props)
+  handleSelectDesigner = () => {
+    this.props.handleSelectDesigner()
   }
 
   render() {    
     const { liked } = this.state
 
     const card = { 
-      style: this.props.style,
+      designer: this.props.designer,
       photo: {uri : this.props.photo },
-      size: this.props.size,
-      retail: this.props.retail
     }
 
-    // console.log("DC PROPS: ", this.props.styleDetails)
+    // console.log("DC PROPS: ", this.props)
     return (
       <View style={styles.container}>
       <TouchableOpacity
@@ -134,8 +117,8 @@ class StyleCard extends React.Component {
         <Image
           style={styles.image}
           source={card.photo}
-          // resizeMode="cover"
-          resizeMode="contain"
+          resizeMode="cover"
+          // resizeMode="contain"
         />
         <View style={styles.photoDescriptionContainer}
         >
@@ -152,13 +135,10 @@ class StyleCard extends React.Component {
             />
           </TouchableOpacity >
           <View style={styles.textContainer}>
-            <Text onPress={this.handleSelectStyle}
-            style={[styles.text, styles.textPhotographer]}>{card.style}</Text>
-          
-          {/* <Text style={styles.text}>Designer:  </Text> */}
-          <Text style={styles.text}>Size: {card.size} </Text>
-          <Text style={styles.text}>${card.retail}</Text>
-          
+            <Text style={styles.text}>Designer:  </Text>
+            <Text
+            onPress={this.handleSelectDesigner}
+            style={[styles.text, styles.textPhotographer]}>{card.designer}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -173,23 +153,22 @@ const msp = (state) => {
 }
 
 const mdp = (dispatch) => {
-  return {newSelectedStyle: (buyerid, styleid) => dispatch(newSelectedStyle(buyerid, styleid))}
+  return {updateFavDesigners: (buyerid, id, liked) => dispatch(updateFavDesigners(buyerid, id, liked))}
 }
 
-export default connect(msp, mdp)(StyleCard)
+export default connect(msp, mdp)(DesignerCard)
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    padding: 5,
+    flex: 1,
+    padding: 10,
     alignItems: 'center',
-    justifyContent: 'center'
   },
   card: {
-    height: '100%',
-    width: '100%',
-    maxWidth: '100%',
-    justifyContent: 'flex-end',
+    height: 345,
+    width: 300,
+    maxWidth: '80%',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.white,
     borderRadius: 5,
@@ -204,8 +183,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 10,
-    height: '70%',
-    width: '100%'
+    height: 280,
+    width: '92%'
   },
   photoDescriptionContainer: {
     width: '100%',
@@ -239,9 +218,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   textContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     textAlign: 'left',
-    paddingTop: 0,
-    flexWrap: 'wrap',
+    paddingTop: 0
   }
 })

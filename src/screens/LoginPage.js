@@ -77,6 +77,7 @@ const LoginPage = (props) => {
          />
          <Input placeholder='password'
           onChangeText={passwordInputHandler}
+          secureTextEntry
           value={password}
           style={styles.input} 
           blurOnSubmit 

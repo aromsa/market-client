@@ -52,7 +52,7 @@ const BuyerHomePage = props => {
       Keyboard.dismiss();
     }}>
       <View style={styles.screen}>
-        <Text style={styles.title} >Welcome back {buyerName()}</Text>
+        {/* <Text style={styles.title} >Welcome back {buyerName()}</Text> */}
         {favDesigners}
       </View>
     </TouchableWithoutFeedback>

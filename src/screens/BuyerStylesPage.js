@@ -3,25 +3,26 @@ import { connect } from 'react-redux'
 import { View, StyleSheet, ScrollView} from 'react-native'
 import StyleCard from '../components/StyleCard'
 
-const StylePage = props => {
+const BuyerStylePage = props => {
 
   // const addLikedStyle = (buyerid, styleid) => {
   //   console.log(buyerid, styleid)
   // }
 
-  // console.log(props.styleDetails)
+  // console.log(props.buyer.buyer.selected_styles)
 
-  let allStyles = props.styles.styles
-  let designerStyles = allStyles.map(style => 
-    <View key={style.id} style={styles.box}>
+  let selectedStyles = props.buyer.buyer.selected_styles
+  // console.log(selectedStyles.map(style => style.style.style_name))
+  let designerStyles = selectedStyles.map(style => 
+    <View key={style.style.id} style={styles.box}>
     <StyleCard
       // addLikedStyle={addLikedStyle}
-      styleDetails={props.styleDetails}
-      style={style.style_name}
-      photo={style.images[0].img}
-      size={style.size}
-      retail={style.retail}
-      id={style.id}>
+      like={true}
+      style={style.style.style_name}
+      photo={style.style.images[0].img}
+      size={style.style.size}
+      retail={style.style.retail}
+      id={style.style.id}>
     </StyleCard>
     </View>)
 
@@ -35,10 +36,10 @@ const StylePage = props => {
 }
 
 const msp = (state) => {
-  return {styles: state.styles}
+  return {buyer: state.buyer}
 }
 
-export default connect(msp)(StylePage)
+export default connect(msp)(BuyerStylePage)
 
 const styles = StyleSheet.create({
   container: {

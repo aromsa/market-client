@@ -63,6 +63,8 @@ export const getStyles = () => {
 }
 
 export const newSelectedStyle = (buyerid, styleid) => {
+  return function (dispatch) {
+  // console.log("IN ACTION: ", buyerid, styleid)
   let ssUrl = 'http://localhost:3000/selected_styles'
   fetch (ssUrl, {
     method: 'POST',
@@ -78,3 +80,4 @@ export const newSelectedStyle = (buyerid, styleid) => {
   .then(response => response.json())
   .then(buyerObj => dispatch({ type: "update ss", payload: buyerObj}))
   }
+}

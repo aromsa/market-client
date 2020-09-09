@@ -49,7 +49,7 @@ const DesignerScreen = props => {
       }}>
         
         <View style={styles.screen}>
-          <Text style={styles.title} >All Designers</Text>
+          {/* <Text style={styles.title} >All Designers</Text> */}
           {allDesigners}
         
         </View>

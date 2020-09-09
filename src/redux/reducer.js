@@ -17,14 +17,14 @@ const buyerReducer = ( state = defaultState, action) => {
         Alert.alert(action.payload.message)
         return {...state, buyer: null}
       }else{
-      
+        // console.log(action.payload.buyer)
         return {...state, buyer: action.payload.buyer}
       }
      case "update favs":
-      // console.log(action.payload.buyer)
       return {...state, buyer: action.payload.buyer}
      case "update ss":
-      console.log("UPDATE SS: ", action.payload.buyer)
+      return {...state, buyer: action.payload.buyer}
+      // console.log("UPDATE SS: ", action.payload.buyer)
     default:
       return state
   }

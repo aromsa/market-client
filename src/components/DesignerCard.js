@@ -4,11 +4,14 @@ import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { updateFavDesigners } from "../redux/action";
 import { connect } from 'react-redux'
+import Colors from '../styles/colors'
+
 
 const colors = {
   transparent: 'transparent',
   white: '#fff',
-  heartColor: '#e92f3c',
+  // heartColor: '#e92f3c',
+  heartColor: Colors.primary,
   textPrimary: '#515151',
   black: '#000', 
 }
@@ -51,6 +54,7 @@ class DesignerCard extends React.Component {
         .then(() => {
           this.largeAnimatedIcon.bounceOut()
           this.smallAnimatedIcon.bounceIn()
+          this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked)
         })
         .then(() => {
           if (!liked) {
@@ -69,6 +73,11 @@ class DesignerCard extends React.Component {
       this.animateIcon()
     }
     this.lastPress = time
+    // this.addLike()
+  }
+
+  addLike = () => {
+    this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
   }
 
   handleOnPressLike = () => {
