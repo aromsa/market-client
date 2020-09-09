@@ -4,12 +4,14 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { newSelectedStyle } from "../redux/action";
+import Colors from '../styles/colors'
 // import { styleDetails } from "../../App"
 
 const colors = {
   transparent: 'transparent',
   white: '#fff',
-  heartColor: '#e92f3c',
+  // heartColor: '#e92f3c',
+  heartColor: Colors.primary,
   textPrimary: '#515151',
   black: '#000', 
 }
@@ -33,11 +35,16 @@ class StyleCard extends React.Component {
     // console.log(this.props.id)
 
     let favs = this.props.buyer.buyer.selected_styles
+    // console.log(favs)
     // let filterDesigners = designers.filter( designer => !favs.some(fav => fav.id === designer.id))
     favs.map(style => {
-      if (style.id === this.props.id){
+      if (style.style.id === this.props.id){
+        // console.log(style.id, this.props.id)
         this.setState(prevState => ({ liked: !prevState.liked }))
       }
+    //   if (this.props.like === true) {
+    //   this.setState(prevState => ({ liked: !prevState.liked }))
+    //  }
     })
   }
 
@@ -62,6 +69,8 @@ class StyleCard extends React.Component {
         .then(() => {
           this.largeAnimatedIcon.bounceOut()
           this.smallAnimatedIcon.bounceIn()
+    this.props.newSelectedStyle(this.props.buyer.buyer.id, this.props.id)
+
         })
         .then(() => {
           if (!liked) {
@@ -85,7 +94,6 @@ class StyleCard extends React.Component {
   handleOnPressLike = (e) => {
     this.smallAnimatedIcon.bounceIn()
     this.setState(prevState => ({ liked: !prevState.liked }))
-    e.preventDefault()
     this.props.newSelectedStyle(this.props.buyer.buyer.id, this.props.id)
   }
 
@@ -98,11 +106,17 @@ class StyleCard extends React.Component {
   }
 
   handleSelectStyle = () => {
-    // this.props.handleSelectDesigner()
-    // console.log("clicked: ", this.props)
-    // props.navigation.navigate("StyleDetailPage")
-    // this.props.styleDetails(this.props)
+    // console.log(this.props.id)
+    this.props.handleSelectStyle(this.props.id)
   }
+
+  // handleSelectStyle = () => {
+  //   console.log("clicked")
+  //   // this.props.handleSelectDesigner()
+  //   // console.log("clicked: ", this.props)
+  //   this.props.navigation.navigate('Style Detail Page')
+  //   // this.props.styleDetails(this.props)
+  // }
 
   render() {    
     const { liked } = this.state
@@ -226,7 +240,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 2,
     borderRadius: 160,
-    opacity: 0
+    opacity: 0,
+    paddingBottom: 110
   },
   text: {
     textAlign: 'center',

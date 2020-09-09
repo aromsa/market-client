@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import thunk from 'redux-thunk'
 import { StyleSheet, View} from 'react-native';
 import Header from './src/components/Header'
+import StyleCard from './src/components/StyleCard'
 import LoginPage from './src/screens/LoginPage'
 import StylePage from './src/screens/StylePage'
 import StyleDetailPage from './src/screens/StyleDetailPage'
@@ -54,6 +55,7 @@ export default function App (props) {
     <Stack.Navigator>
       <Stack.Screen options={{ title: ""}} name="Login" component={LoginPage}/>
       <Stack.Screen name="StylePage" component={StylePage}/>
+      <Stack.Screen navigation={props.navigation} name="StyleCard" component={StyleCard}/>
       <Stack.Screen name="Style Detail Page" component={StyleDetailPage}/>
       <Stack.Screen name="BuyerHomePage" children={createDrawer}
         options={({ navigation }) => ({

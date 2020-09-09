@@ -76,9 +76,9 @@ class DesignerCard extends React.Component {
     // this.addLike()
   }
 
-  addLike = () => {
-    this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
-  }
+  // addLike = () => {
+  //   this.props.updateFavDesigners(this.props.buyer.buyer.id, this.props.id, this.state.liked) 
+  // }
 
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn()

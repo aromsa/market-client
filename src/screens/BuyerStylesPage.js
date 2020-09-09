@@ -11,12 +11,17 @@ const BuyerStylePage = props => {
 
   // console.log(props.buyer.buyer.selected_styles)
 
+  const handleSelectStyle = (styleid) => {
+    props.navigation.navigate("Style Detail Page", {styleid: styleid})
+  }
+
   let selectedStyles = props.buyer.buyer.selected_styles
   // console.log(selectedStyles.map(style => style.style.style_name))
   let designerStyles = selectedStyles.map(style => 
     <View key={style.style.id} style={styles.box}>
     <StyleCard
       // addLikedStyle={addLikedStyle}
+      handleSelectStyle={handleSelectStyle}
       like={true}
       style={style.style.style_name}
       photo={style.style.images[0].img}

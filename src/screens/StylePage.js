@@ -11,10 +11,15 @@ const StylePage = props => {
 
   // console.log(props.styleDetails)
 
+  const handleSelectStyle = (styleid) => {
+    props.navigation.navigate("Style Detail Page", {styleid: styleid})
+  }
+
   let allStyles = props.styles.styles
-  let designerStyles = allStyles.map(style => 
+  let selectStyles = allStyles.map(style => 
     <View key={style.id} style={styles.box}>
     <StyleCard
+      handleSelectStyle={handleSelectStyle}
       // addLikedStyle={addLikedStyle}
       styleDetails={props.styleDetails}
       style={style.style_name}
@@ -28,7 +33,7 @@ const StylePage = props => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {designerStyles}
+        {selectStyles}
       </View>
     </ScrollView>
   )
