@@ -86,7 +86,7 @@ const LoginPage = (props) => {
          />
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
-              <Button title="Sign In" onPress={handleSignInSubmit} color={Colors.accent}/>
+              <Button title="SIGN IN" onPress={handleSignInSubmit} color={Colors.accent}/>
             </View>
           </View>
           <View>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginVertical: 50,
+    fontFamily: "Avenir Next"
   },
   input: {
     width: "100%",
@@ -129,12 +130,15 @@ const styles = StyleSheet.create({
   },
   cardFooter: {
     width: "100%",
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: 4,
   },
  textUnderline: {
   width: "100%",
   textAlign: 'center',
-  textDecorationLine: 'underline'
+  textDecorationLine: 'underline',
+  padding: 4,
+
  }
 })
 

@@ -48,16 +48,17 @@ export default function App (props) {
     <Drawer.Screen name="Home" component={BuyerHomePage}/>
     <Drawer.Screen name="All Designers" component={DesignerScreen} />
     <Drawer.Screen name="Selected Styles" component={BuyerStylesPage} />
+    <Drawer.Screen name="Update Profile" component={LoginPage} />
     <Drawer.Screen name="Log Out" component={LoginPage} />
   </Drawer.Navigator>
 
   const createHomeStack = () =>
     <Stack.Navigator>
       <Stack.Screen options={{ title: ""}} name="Login" component={LoginPage}/>
-      <Stack.Screen name="StylePage" component={StylePage}/>
+      <Stack.Screen options={{ title: ""}} name="StylePage" component={StylePage}/>
       <Stack.Screen navigation={props.navigation} name="StyleCard" component={StyleCard}/>
-      <Stack.Screen name="Style Detail Page" component={StyleDetailPage}/>
-      <Stack.Screen name="BuyerHomePage" children={createDrawer}
+      <Stack.Screen options={{ title: ""}} name="Style Detail Page" component={StyleDetailPage}/>
+      <Stack.Screen name="BuyerHomePage" children={createDrawer} 
         options={({ navigation }) => ({
           title: "MARKET",
           headerLeft: () =>
@@ -74,10 +75,10 @@ export default function App (props) {
 
   return (
     
-    <Provider store={store} >
+    <Provider store={store}>
       <NavigationContainer>
         <View style={styles.screen}>
-          {/* <Header title="MARKET"/> */}
+          {/* <Header title="MARKET"/> */ }
           {createHomeStack()}
         </View>
       </NavigationContainer>
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
+    // fontFamily: 'Bradley Hand',
     fontFamily: "AvenirNext-UltraLight"
   }
 });
