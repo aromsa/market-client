@@ -171,7 +171,7 @@ class StyleCard extends React.Component {
           
           {/* <Text style={styles.text}>Designer:  </Text> */}
           <Text style={styles.text}>Size: {card.size} </Text>
-          <Text style={styles.text}>${card.retail}</Text>
+          <Text style={styles.text}>Retail: ${card.retail}</Text>
           
           </View>
         </View>
